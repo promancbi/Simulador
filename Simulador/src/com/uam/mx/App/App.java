@@ -1,10 +1,12 @@
 package com.uam.mx.App;
 
+import com.uam.mx.Vista.VistaProcesar;
+
 public class App {
 
 	public static void main(String[] args) {
-		//Empezando
-		System.out.println();
+		VistaProcesar frame = new VistaProcesar();
+		frame.setVisible(true);
 	}
 
 }
