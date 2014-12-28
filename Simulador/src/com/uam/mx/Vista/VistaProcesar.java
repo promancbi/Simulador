@@ -112,6 +112,11 @@ public class VistaProcesar extends JFrame {
 		contentPane.add(btnAgregar);
 		
 	    btnIniciar = new JButton("Iniciar");
+	    btnIniciar.addActionListener(new ActionListener() {
+	    	public void actionPerformed(ActionEvent e) {
+	    		new Thread(new Hilo()).start();
+	    	}
+	    });
 		btnIniciar.setBounds(396, 43, 117, 25);
 		contentPane.add(btnIniciar);
 		
@@ -269,12 +274,50 @@ public class VistaProcesar extends JFrame {
 	
 	public void Cargar(int i){
 		NProceso = (int)tableLista.getValueAt(i, 0);
-		Rafaga = parseInt((String) (tableLista.getValueAt(i, 1)));
-		Quantum = parseInt((String)(tableLista.getValueAt(i, 2))); 
-		ResiduoRafaga = parseInt((String)(tableLista.getValueAt(i, 3)));
+		Rafaga = Integer.parseInt((String) (tableLista.getValueAt(i, 1)));
+		Quantum =Integer.parseInt((String)(tableLista.getValueAt(i, 2))); 
+		ResiduoRafaga = Integer.parseInt((String)(tableLista.getValueAt(i, 3)));
 		
 		if(NProceso > 0){
 			lblNumProc.setText(String.valueOf(NProceso));
 		}
+	}
+	
+	public void Borrar(int c){
+		tableLista.setValueAt(0, c, 0);
+		tableLista.setValueAt("0", c, 1);
+		tableLista.setValueAt("0", c, 2);
+		tableLista.setValueAt("0", c, 3);
+		tableLista.setValueAt("*****", c, 4);
+	}
+	
+	public void Barra(int rafaga, int residuo){
+		int Rafaga = rafaga;
+		int valor = 100/rafaga;
+		int porcentaje = 100 - (valor*residuo);
+		ValorBarra = porcentaje;
+		lblPocentajeProceso.setText(String.valueOf(ValorBarra+" %"));
+	}
+	
+	public void Pintar(){
+		progressBar.setValue(ValorBarra);
+		progressBar.repaint();
+	}
+	
+	public void Informe(int c){
+		DefaultTableModel model2 = (DefaultTableModel)tableHistorico.getModel();
+		
+		Object[] miTabla = new Object[5];
+		miTabla[0] = c+1;
+		miTabla[1] = Rafaga;
+		miTabla[2] = Quantum;
+		miTabla[3] = TiempoProceso + " segundos";
+		miTabla[4] = "Terminado" ;
+		model2.addRow(miTabla);
+		tableHistorico.setModel(model2);
+		
+		CantidadProcesos++;
+		lblCantidadProc.setText(String.valueOf(CantidadProcesos + " Terminados"));
+		lblTiempoProce.setText(TiempoProceso + " segundos");
 	}
 }
