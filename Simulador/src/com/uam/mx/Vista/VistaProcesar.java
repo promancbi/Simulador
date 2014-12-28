@@ -115,6 +115,7 @@ public class VistaProcesar extends JFrame {
 	    btnIniciar.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
 	    		new Thread(new Hilo()).start();
+	    		Iniciar();
 	    	}
 	    });
 		btnIniciar.setBounds(396, 43, 117, 25);
@@ -319,5 +320,14 @@ public class VistaProcesar extends JFrame {
 		CantidadProcesos++;
 		lblCantidadProc.setText(String.valueOf(CantidadProcesos + " Terminados"));
 		lblTiempoProce.setText(TiempoProceso + " segundos");
+	}
+	
+	public void Iniciar(){
+		lblQuantum.setVisible(false);
+		lblRafaga.setVisible(false);
+		txtRafaga.setVisible(false);
+		txtQuantum.setVisible(false);
+		btnAgregar.setVisible(false);
+		btnIniciar.setVisible(false);
 	}
 }
